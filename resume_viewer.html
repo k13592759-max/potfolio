@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Portal | Krishna Y. Katekhaye</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05070f;
+            --blue: #00aaff;
+            --cyan: #00ffcc;
+            --glass: rgba(13,17,23,0.8);
+            --border: rgba(0,170,255,0.2);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Ambient Background */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; z-index: -1;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #0a122a 0%, #05070f 100%);
+        }
+
+        header {
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5,7,15,0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            z-index: 10;
+        }
+
+        .brand {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--cyan);
+            letter-spacing: 2px;
+        }
+
+        .nav-btns { display: flex; gap: 15px; }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue), var(--cyan));
+            color: #000;
+            border: none;
+            box-shadow: 0 0 15px rgba(0,170,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,170,255,0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        main {
+            flex: 1;
+            padding: 30px 6%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .viewer-container {
+            width: 100%;
+            max-width: 900px;
+            height: 100%;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .viewer-header {
+            padding: 15px 25px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+            animation: blink 1.5s infinite;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            header { padding: 15px 4%; }
+            .brand { font-size: 1rem; }
+            .btn span { display: none; }
+            main { padding: 15px 4%; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <header>
+        <div class="brand">DOCUMENT_MODULE // KRISHNA</div>
+        <div class="nav-btns">
+            <a href="index.html" class="btn btn-outline">🏠 <span>Back to Home</span></a>
+            <a href="Profile.pdf" download class="btn btn-primary">📥 <span>Download PDF</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="viewer-container">
+            <div class="viewer-header">
+                <div class="file-info">
+                    <div class="status-dot"></div>
+                    FILE: Profile.pdf // TYPE: APPLICATION/PDF
+                </div>
+                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">[SECURE ACCESS]</div>
+            </div>
+            <iframe src="Profile.pdf#toolbar=0" title="Resume Viewer"></iframe>
+        </div>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = Array.from({length: 100}, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 1.5,
+            opacity: Math.random()
+        }));
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                ctx.fillStyle = `rgba(0, 170, 255, ${s.opacity})`;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
+                s.opacity += (Math.random() - 0.5) * 0.05;
+                if (s.opacity < 0.1) s.opacity = 0.1;
+                if (s.opacity > 0.8) s.opacity = 0.8;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
